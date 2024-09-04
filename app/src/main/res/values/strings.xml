@@ -1,4 +1,13 @@
 <resources>
     <string name="app_name">AndroidModelTreinning</string>
-    <string name="Usuario">Información de usuario</string>
+
+    <!-- Login Screen -->
+    <string name="labellogin">Información de usuario</string>
+    <string name="label_username">Username</string>
+    <string name="label_password">Password</string>
+    <string name="action_validate">Login</string>
+    <string name="message_login_ok">Credenciales Correctas</string>
+    <string name="message_login_fail">Credenciales NO Correctas</string>
+
+
 </resources>
