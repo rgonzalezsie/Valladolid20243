@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -19,7 +20,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        loginFactory = LoginFactory()
+        loginFactory = LoginFactory(this)
         loginViewModel = loginFactory.provideLoginViewModel()
         setContentView(R.layout.activity_main)
         setupView()
@@ -32,7 +33,8 @@ class MainActivity : AppCompatActivity() {
         actionValidate.setOnClickListener {
             val userName = findViewById<EditText>(R.id.input_username).text.toString()
             val userPassword = findViewById<EditText>(R.id.input_password).text.toString()
-            val isValid = loginViewModel.validateClicked(userName, userPassword)
+            val rememberIsChecked = findViewById<CheckBox>(R.id.check_remember).isChecked
+            val isValid = loginViewModel.validateClicked(userName, userPassword, rememberIsChecked)
             if (isValid) {
                 Snackbar.make(
                     findViewById(R.id.main),
@@ -47,5 +49,12 @@ class MainActivity : AppCompatActivity() {
                 ).show()
             }
         }
+    }
+    override fun onResume() {
+        super.onResume()
+        loginViewModel.onResumed()?.let { username ->
+            //username es no nulo
+            findViewById<EditText>(R.id.input_username).setText(username)
+        } // Si es nulo, ignoro lo anterior
     }
 }
